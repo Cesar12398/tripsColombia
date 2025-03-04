@@ -4,10 +4,10 @@
     $pass = '';
     $db = 'trips';
 
-    $conn = new mysqli($host, $user, $pass, $db);
+    $conexion = new mysqli($host, $user, $pass, $db);
 
-    if ($conn->connect_error) {
-        $conn->connect_error;
+    if ($conexion->connect_error) {
+        $conexion->connect_error;
     }
     // echo 'Conectado a la Base de Datos!';
 ?>

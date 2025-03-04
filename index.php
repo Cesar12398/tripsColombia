@@ -20,10 +20,21 @@ include 'conexion.php';
 		background-color: #003087;
 	}
 
+	.wrap{
+		white-space: nowrap;
+	}
+
+	.botones{
+		width: 100%;
+	}
+
+	.total{
+		text-align: right;
+	}
 </style>
 <body>
 	<div class="container-fluid p-1">
-		<h2 class="text-center"> <img width="50" height="50" src="colombia.png">Colombia Trip<img width="50" height="50" src="colombia.png"></h2>
+		<h2 class="text-center">Colombia Trip<img height="28" src="colombia.png"></h2>
 	</div>
 
 	<div class="container mt-3 col-md-3 shadow p-2 mb-3">
@@ -32,26 +43,76 @@ include 'conexion.php';
 			<label class="form-label" for="gasto">Gasto:</label>
 			<input type="hidden" id="accion" name="accion" value="agregar">
 			<input type="text" class="form-control" id="gasto" name="gasto" placeholder="Ingrese Gasto" required><br>
-			<label for="telefono">Monto:</label>
+			<label for="monto">Monto:</label>
 			<input type="text" class="form-control" id="monto" name="monto" placeholder="Ingrese Monto" required><br>
 			<button type="submit" class="btn text-white">Guardar</button>
 		</form>
-
 	</div>
+	<?php
 
+	$query = "SELECT * FROM colombia";
+	$result = $conexion->query($query);
+
+	if ($result->num_rows > 0) {
+		?>
 		<div class="container mt-3 table-responsive">
 			<table class="table table-hover text-center">
-				<thead class="">
+				<thead class="table-dark">
 					<tr>
-						<th>ID</th>
+						<th>#</th>
 						<th>GASTO</th>
 						<th>BASE</th>
 						<th>IVA (21%)</th>
 						<th>MONTO</th>
 					</tr>
 				</thead>
-			</table>
+				<tbody>
+					<?php
+					$counter = '';
+					while ($row = $result->fetch_assoc()) {
+						$counter++;
+						?>
+						<tr>
+							<td class="wrap"><?php echo $counter; ?></td>
+							<td class="wrap"><?php echo $row['gasto']; ?></td>
+							<td class="wrap"></td>
+							<td class="wrap"><?php echo $row['monto'] * 0.21; ?></td>
+							<td class="wrap"><?php echo $row['monto']; ?></td>
+						</tr>
+
+	<?php
+					}
+
+					$querysum = "SELECT SUM(monto) AS total FROM colombia";
+					$result = $conexion->query($querysum);
+					$result = $result->fetch_assoc();
+
+	?>
+			<tr>
+				<td colspan="4" class="total">Total</td>
+				<td><?php echo $result['total'];?></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+	<?php
+		}
+		else {
+	?>
+
+	<div class="container col-md-3 mt-3">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">No hay Gastos Registrados</h5>
+				<p class="card-text">¡Comienza a disfrutar de Colombia!</p>
+			</div>
 		</div>
+	</div>
+
+	<?php
+        }
+        $conexion->close();
+    ?>
 
 </body>
 </html>
