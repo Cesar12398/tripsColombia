@@ -71,12 +71,14 @@ include 'conexion.php';
 					$counter = '';
 					while ($row = $result->fetch_assoc()) {
 						$counter++;
+					$iva21 = $row['monto'] * 0.21;
+					$base = $row['monto'] - $iva21;
 						?>
 						<tr>
 							<td class="wrap"><?php echo $counter; ?></td>
 							<td class="wrap"><?php echo $row['gasto']; ?></td>
-							<td class="wrap"></td>
-							<td class="wrap"><?php echo $row['monto'] * 0.21; ?></td>
+							<td class="wrap"><?php echo $base;?></td>
+							<td class="wrap"><?php echo $iva21;?></td>
 							<td class="wrap"><?php echo $row['monto']; ?></td>
 						</tr>
 
@@ -86,11 +88,17 @@ include 'conexion.php';
 					$querysum = "SELECT SUM(monto) AS total FROM colombia";
 					$result = $conexion->query($querysum);
 					$result = $result->fetch_assoc();
+					$limite = 400;
 
+					if ($result['total'] >= $limite) {
+						$color = "red";
+					} else {
+						$color = "green";
+					}
 	?>
 			<tr>
 				<td colspan="4" class="total">Total</td>
-				<td><?php echo $result['total'];?></td>
+				<td style="background-color: <?php echo $color;?>"><?php echo $result['total'];?></td>
 			</tr>
 			</tbody>
 		</table>
