@@ -10,39 +10,26 @@ include 'conexion.php';
 	<link rel="icon" href="colombia.png" type="image/png">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="estilo.css">
 </head>
-<style>
-	.container-fluid {
-		background-color: #FFCD00 ;
-	}
-
-	.btn{
-		background-color: #003087;
-	}
-
-	.wrap{
-		white-space: nowrap;
-	}
-
-	.botones{
-		width: 100%;
-	}
-
-	.total{
-		text-align: right;
-	}
-</style>
 <body>
 	<div class="container-fluid p-1">
 		<h2 class="text-center">Colombia Trip<img height="28" src="colombia.png"></h2>
 	</div>
 
 	<div class="container mt-3 col-md-3 shadow p-2 mb-3">
-		<h3 class="text-center">Registro de Gastos</h3>
+		<h3 class="text-center">Registro de Gastos</h3> <br>
 		<form action="procesar.php" method="POST">
 			<label class="form-label" for="gasto">Gasto:</label>
-			<input type="hidden" id="accion" name="accion" value="agregar">
-			<input type="text" class="form-control" id="gasto" name="gasto" placeholder="Ingrese Gasto" required><br>
+			<!-- <input type="hidden" id="accion" name="accion" value="agregar"> -->
+			<select class="form-control" id="gasto" name="gasto">
+        		<option value="" disabled selected>Selecciona tipo de gasto:</option>
+        		<option value="COMPRAS">COMPRAS</option>
+        		<option value="ALCOHOL">ALCOHOL</option>
+        		<option value="COMIDA">COMIDA</option>
+        		<option value="GIFTS">GIFTS</option>
+			</select> <br><br>
+			<!-- <input type="text" class="form-control" id="gasto" name="gasto" placeholder="Ingrese Gasto" required><br> -->
 			<label for="monto">Monto:</label>
 			<input type="text" class="form-control" id="monto" name="monto" placeholder="Ingrese Monto" required><br>
 			<button type="submit" class="btn text-white">Guardar</button>
@@ -57,7 +44,7 @@ include 'conexion.php';
 		?>
 		<div class="container mt-3 table-responsive">
 			<table class="table table-hover text-center">
-				<thead class="table-dark">
+				<thead>
 					<tr>
 						<th>#</th>
 						<th>GASTO</th>

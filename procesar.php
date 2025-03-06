@@ -9,7 +9,7 @@
 <body>
 	<?php
 		if ($_POST) {
-			$accion = $_POST['accion'];
+			$accion = $_POST['gasto'];
 
 			function ejecutar_query($sql){
 				include 'conexion.php';
@@ -26,8 +26,22 @@
 			$monto = (isset($_POST["monto"])) ? $_POST["monto"] : '';
 
 			switch ($accion) {
-				case 'agregar':
-				    $sql = "INSERT INTO colombia VALUES ('', '$gasto', '$monto')";
+				case 'COMPRAS':
+				    $sql = "INSERT INTO colombia VALUES ('', 'COMPRAS', '$monto')";
+				    break;
+				case 'ALCOHOL':
+				    $sql = "INSERT INTO colombia VALUES ('', 'ALCOHOL', '$monto')";
+				    break;
+				case 'COMIDA':
+				    $sql = "INSERT INTO colombia VALUES ('', 'COMIDA', '$monto')";
+				    break;
+				case 'GIFTS':
+				    $sql = "INSERT INTO colombia VALUES ('', 'GIFTS', '$monto')";
+				    break;
+				default:
+           		echo "Opción no válida.";
+            	exit();
+			}
 				    if (ejecutar_query($sql) == 'ok') {
 	?>
 	  				<script>
@@ -41,10 +55,10 @@
                         </script>
     <?php
 				    }
-					break;
-                break;
+
+
 			}
-		}
+
 		else{
 	?>
 			<script type="text/javascript">

@@ -1,0 +1,30 @@
+
+	.container-fluid {
+		background-color: #FFCD00 ;
+	}
+
+	.btn{
+		background-color: #003087;
+	}
+
+	.wrap{
+		white-space: nowrap;
+	}
+
+	.botones{
+		width: 100%;
+	}
+
+	.total{
+		text-align: right;
+	}
+	.table thead {
+            background-color: #FFCD00 !important;
+            color: black !important;
+        }
+
+
+        .table thead th {
+            background-color: #FFCD00 !important;
+            color: black !important;
+        }
