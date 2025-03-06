@@ -21,17 +21,19 @@ include 'conexion.php';
 		<h3 class="text-center">Registro de Gastos</h3> <br>
 		<form action="procesar.php" method="POST">
 			<label class="form-label" for="gasto">Gasto:</label>
-			<!-- <input type="hidden" id="accion" name="accion" value="agregar"> -->
-			<select class="form-control" id="gasto" name="gasto">
-        		<option value="" disabled selected>Selecciona tipo de gasto:</option>
+			<input type="hidden" id="accion" name="accion" value="agregar">
+			<input type="text" class="form-control" id="gasto" name="gasto" placeholder="Ingrese Gasto" required><br>
+			<label for="monto">Monto:</label>
+			<input type="text" class="form-control" id="monto" name="monto" placeholder="Ingrese Monto" required><br>
+			<label class="form-label" for="tipo">Tipo de Gasto:</label>
+			<select class="form-control" id="tipo" name="tipo" required>
+        		<option value="">Selecciona tipo de gasto:</option>
         		<option value="COMPRAS">COMPRAS</option>
         		<option value="ALCOHOL">ALCOHOL</option>
         		<option value="COMIDA">COMIDA</option>
         		<option value="GIFTS">GIFTS</option>
-			</select> <br><br>
-			<!-- <input type="text" class="form-control" id="gasto" name="gasto" placeholder="Ingrese Gasto" required><br> -->
-			<label for="monto">Monto:</label>
-			<input type="text" class="form-control" id="monto" name="monto" placeholder="Ingrese Monto" required><br>
+			</select> <br>
+
 			<button type="submit" class="btn text-white">Guardar</button>
 		</form>
 	</div>
@@ -48,6 +50,7 @@ include 'conexion.php';
 					<tr>
 						<th>#</th>
 						<th>GASTO</th>
+						<th>TIPO</th>
 						<th>BASE</th>
 						<th>IVA (21%)</th>
 						<th>MONTO</th>
@@ -55,18 +58,35 @@ include 'conexion.php';
 				</thead>
 				<tbody>
 					<?php
+
+					function formato_moneda($numero) {
+    					return number_format($numero, 2, ',', '.') .' €';
+					}
 					$counter = '';
+
 					while ($row = $result->fetch_assoc()) {
 						$counter++;
+						switch (variable) {
+							case 'value':
+								// code...
+								break;
+
+							default:
+								// code...
+								break;
+						}
 					$iva21 = $row['monto'] * 0.21;
 					$base = $row['monto'] - $iva21;
+
+
 						?>
 						<tr>
 							<td class="wrap"><?php echo $counter; ?></td>
 							<td class="wrap"><?php echo $row['gasto']; ?></td>
-							<td class="wrap"><?php echo $base;?></td>
-							<td class="wrap"><?php echo $iva21;?></td>
-							<td class="wrap"><?php echo $row['monto']; ?></td>
+							<td class="wrap"><?php echo $row['tipo']; ?></td>
+							<td class="wrap"><?php echo formato_moneda($base); ?></td>
+							<td class="wrap"><?php echo formato_moneda($iva21) ;?></td>
+							<td class="wrap"><?php echo formato_moneda($row['monto']); ?></td>
 						</tr>
 
 	<?php
@@ -75,7 +95,7 @@ include 'conexion.php';
 					$querysum = "SELECT SUM(monto) AS total FROM colombia";
 					$result = $conexion->query($querysum);
 					$result = $result->fetch_assoc();
-					$limite = 400;
+					$limite = 800;
 
 					if ($result['total'] >= $limite) {
 						$color = "red";
@@ -84,8 +104,8 @@ include 'conexion.php';
 					}
 	?>
 			<tr>
-				<td colspan="4" class="total">Total</td>
-				<td style="background-color: <?php echo $color;?>"><?php echo $result['total'];?></td>
+				<td colspan="5" class="total">Total</td>
+				<td style="background-color: <?php echo $color;?>"><?php echo formato_moneda($result['total']);?></td>
 			</tr>
 			</tbody>
 		</table>

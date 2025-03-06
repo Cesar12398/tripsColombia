@@ -9,7 +9,7 @@
 <body>
 	<?php
 		if ($_POST) {
-			$accion = $_POST['gasto'];
+			$accion = $_POST['accion'];
 
 			function ejecutar_query($sql){
 				include 'conexion.php';
@@ -23,53 +23,40 @@
 
 			$id = (isset($_POST["id"])) ? $_POST["id"] : '';
 			$gasto = (isset($_POST["gasto"])) ? $_POST["gasto"] : '';
+			$tipo = (isset($_POST["tipo"])) ? $_POST["tipo"] : '';
 			$monto = (isset($_POST["monto"])) ? $_POST["monto"] : '';
 
 			switch ($accion) {
-				case 'COMPRAS':
-				    $sql = "INSERT INTO colombia VALUES ('', 'COMPRAS', '$monto')";
-				    break;
-				case 'ALCOHOL':
-				    $sql = "INSERT INTO colombia VALUES ('', 'ALCOHOL', '$monto')";
-				    break;
-				case 'COMIDA':
-				    $sql = "INSERT INTO colombia VALUES ('', 'COMIDA', '$monto')";
-				    break;
-				case 'GIFTS':
-				    $sql = "INSERT INTO colombia VALUES ('', 'GIFTS', '$monto')";
-				    break;
-				default:
-           		echo "Opción no válida.";
-            	exit();
-			}
+				case 'agregar':
+				    $sql = "INSERT INTO colombia VALUES ('', '$gasto', '$tipo', '$monto')";
 				    if (ejecutar_query($sql) == 'ok') {
 	?>
 	  				<script>
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Listo !!!',
-                                text: '<?php echo $gasto ?> Agregado Exitosamente!'
+                                text: 'Agregado Exitosamente!'
                             }).then(function() {
                                 window.location = "index.php";
                             });
-                        </script>
+                    </script>
     <?php
 				    }
-
-
+				    break;
 			}
+		}
 
 		else{
 	?>
 			<script type="text/javascript">
 				Swal.fire({
-					icon: "error",
-					title: "Oops...",
-					text: "No tienes Permuiso!"
+				icon: "error",
+				title: "Oops...",
+				text: "No tienes Permuiso!"
 				}).then(function() {
-                    window.location = "index.php";
-                });
-			</script>
+			    window.location = "index.php";
+			    });
+				</script>
 	<?php
 		}
 	?>
