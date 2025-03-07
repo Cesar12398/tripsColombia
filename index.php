@@ -57,7 +57,7 @@ include 'conexion.php';
 					</tr>
 				</thead>
 				<tbody>
-					<?php
+<?php
 
 					function formato_moneda($numero) {
     					return number_format($numero, 2, ',', '.') .' €';
@@ -66,30 +66,41 @@ include 'conexion.php';
 
 					while ($row = $result->fetch_assoc()) {
 						$counter++;
-						switch (variable) {
-							case 'value':
-								// code...
-								break;
 
+						$gasto = $row['gasto'];
+						$tipo = $row['tipo'];
+						$monto = $row['monto'];
+						$iva = 0;
+
+						switch ($tipo) {
+							case 'ALCOHOL':
+								$iva = $monto * 0.42;
+								$base = $monto - $iva;
+								break;
+							case 'COMIDA':
+								$iva = $monto * 0.105;
+								$base = $monto - $iva;
+								break;
+							case 'GIFTS':
+								$iva = $monto * 0.0525;
+								$base = $monto - $iva;
+								break;
 							default:
-								// code...
+								$iva = $monto * 0.21;
+								$base = $monto - $iva;
 								break;
 						}
-					$iva21 = $row['monto'] * 0.21;
-					$base = $row['monto'] - $iva21;
-
-
-						?>
+?>
 						<tr>
 							<td class="wrap"><?php echo $counter; ?></td>
-							<td class="wrap"><?php echo $row['gasto']; ?></td>
-							<td class="wrap"><?php echo $row['tipo']; ?></td>
+							<td class="wrap"><?php echo $gasto; ?></td>
+							<td class="wrap"><?php echo $tipo?></td>
 							<td class="wrap"><?php echo formato_moneda($base); ?></td>
-							<td class="wrap"><?php echo formato_moneda($iva21) ;?></td>
-							<td class="wrap"><?php echo formato_moneda($row['monto']); ?></td>
+							<td class="wrap"><?php echo formato_moneda($iva) ;?></td>
+							<td class="wrap"><?php echo formato_moneda($monto); ?></td>
 						</tr>
 
-	<?php
+<?php
 					}
 
 					$querysum = "SELECT SUM(monto) AS total FROM colombia";
