@@ -22,13 +22,14 @@
 			}
 
 			$id = (isset($_POST["id"])) ? $_POST["id"] : '';
+			$fecha = (isset($_POST["fecha"])) ? $_POST["fecha"] : '';
 			$gasto = (isset($_POST["gasto"])) ? $_POST["gasto"] : '';
 			$tipo = (isset($_POST["tipo"])) ? $_POST["tipo"] : '';
 			$monto = (isset($_POST["monto"])) ? $_POST["monto"] : '';
 
 			switch ($accion) {
 				case 'agregar':
-				    $sql = "INSERT INTO colombia VALUES ('', '$gasto', '$tipo', '$monto')";
+				    $sql = "INSERT INTO colombia VALUES ('', now(), '$gasto', '$tipo', '$monto')";
 				    if (ejecutar_query($sql) == 'ok') {
 	?>
 	  				<script>

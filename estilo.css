@@ -18,13 +18,13 @@
 	.total{
 		text-align: right;
 	}
+
 	.table thead {
-            background-color: #FFCD00 !important;
-            color: black !important;
-        }
+        background-color: #FFCD00 !important;
+        color: black !important;
+    }
 
-
-        .table thead th {
-            background-color: #FFCD00 !important;
-            color: black !important;
-        }
+    .table thead th {
+        background-color: #FFCD00 !important;
+        color: black !important;
+   	}

@@ -49,11 +49,13 @@ include 'conexion.php';
 				<thead>
 					<tr>
 						<th>#</th>
+						<th>FECHA</th>
 						<th>GASTO</th>
 						<th>TIPO</th>
 						<th>BASE</th>
 						<th>IVA (21%)</th>
 						<th>MONTO</th>
+						<!-- <th>OCULTAR</th> -->
 					</tr>
 				</thead>
 				<tbody>
@@ -67,6 +69,9 @@ include 'conexion.php';
 					while ($row = $result->fetch_assoc()) {
 						$counter++;
 
+						$fecha = $row['fecha'];
+						$fecha = new DateTime($fecha);
+						$fecha = date_format($fecha, 'd/m/Y h:i');
 						$gasto = $row['gasto'];
 						$tipo = $row['tipo'];
 						$monto = $row['monto'];
@@ -93,11 +98,13 @@ include 'conexion.php';
 ?>
 						<tr>
 							<td class="wrap"><?php echo $counter; ?></td>
+							<td class="wrap"><?php echo $fecha;?></td>
 							<td class="wrap"><?php echo $gasto; ?></td>
 							<td class="wrap"><?php echo $tipo?></td>
 							<td class="wrap"><?php echo formato_moneda($base); ?></td>
 							<td class="wrap"><?php echo formato_moneda($iva) ;?></td>
 							<td class="wrap"><?php echo formato_moneda($monto); ?></td>
+							<!-- <td class="wrap"></td> -->
 						</tr>
 
 <?php
@@ -115,7 +122,7 @@ include 'conexion.php';
 					}
 	?>
 			<tr>
-				<td colspan="5" class="total">Total</td>
+				<td colspan="6" class="total">Total</td>
 				<td style="background-color: <?php echo $color;?>"><?php echo formato_moneda($result['total']);?></td>
 			</tr>
 			</tbody>
